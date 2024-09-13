@@ -10,7 +10,7 @@ from time import sleep
 from models.city import City
 
 
-class TestCity_instantiation(unittest.TestCase):
+class TestCityInstantiation(unittest.TestCase):
     """Unittests for testing instantiation of the City class."""
 
     def test_no_args_instantiates(self):
@@ -61,11 +61,11 @@ class TestCity_instantiation(unittest.TestCase):
         dt = datetime.today()
         dt_repr = repr(dt)
         cy = City()
-        cy.id = "123456"
+        cy.id = "345"
         cy.created_at = cy.updated_at = dt
         cystr = cy.__str__()
-        self.assertIn("[City] (123456)", cystr)
-        self.assertIn("'id': '123456'", cystr)
+        self.assertIn("[City] (345)", cystr)
+        self.assertIn("'id': '345'", cystr)
         self.assertIn("'created_at': " + dt_repr, cystr)
         self.assertIn("'updated_at': " + dt_repr, cystr)
 
@@ -86,11 +86,11 @@ class TestCity_instantiation(unittest.TestCase):
             City(id=None, created_at=None, updated_at=None)
 
 
-class TestCity_save(unittest.TestCase):
+class TestCitySave(unittest.TestCase):
     """Unittests for testing save method of the City class."""
 
     @classmethod
-    def setUp(self):
+    def setUp(cls):
         try:
             os.rename("file.json", "tmp")
         except IOError:
@@ -137,7 +137,7 @@ class TestCity_save(unittest.TestCase):
             self.assertIn(cyid, f.read())
 
 
-class TestCity_to_dict(unittest.TestCase):
+class TestCityToDict(unittest.TestCase):
     """Unittests for testing to_dict method of the City class."""
 
     def test_to_dict_type(self):
@@ -167,10 +167,10 @@ class TestCity_to_dict(unittest.TestCase):
     def test_to_dict_output(self):
         dt = datetime.today()
         cy = City()
-        cy.id = "123456"
+        cy.id = "345"
         cy.created_at = cy.updated_at = dt
         tdict = {
-            'id': '123456',
+            'id': '345',
             '__class__': 'City',
             'created_at': dt.isoformat(),
             'updated_at': dt.isoformat(),
