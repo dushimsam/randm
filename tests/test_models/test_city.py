@@ -90,7 +90,7 @@ class TestCitySave(unittest.TestCase):
     """Unittests for testing save method of the City class."""
 
     @classmethod
-    def setUp(cls):
+    def setUp(self):
         try:
             os.rename("file.json", "tmp")
         except IOError:
