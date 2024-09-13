@@ -1,20 +1,17 @@
 #!/usr/bin/python3
-"""
-This module contains Amenity class (Blueprint for creating Amenity objects).
-"""
+"""The `amenity` module
 
+It defines one class, `Amenity(),
+which sub-classes the `BaseModel()` class.`
+"""
 from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
-    """
-    This is the amenity class
+    """An amenity provided by a place/house.
 
     Attributes:
-        name (str): The name of the amenity
+        name
     """
-    name = ""
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # self.name = Amenity.name
+    name = ""
