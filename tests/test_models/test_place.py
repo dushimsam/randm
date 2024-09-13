@@ -10,7 +10,7 @@ from time import sleep
 from models.place import Place
 
 
-class TestPlace_instantiation(unittest.TestCase):
+class TestPlaceInstantiation(unittest.TestCase):
     """Unittests for testing instantiation of the Place class."""
 
     def test_no_args_instantiates(self):
