@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-This module defines a BaseModel class that
-defines all common attributes/methods for model classes
+This module introduces the BaseModel class,
+which serves as a blueprint for all model classes.
 """
 
 import uuid
@@ -11,16 +11,20 @@ from datetime import datetime
 
 class BaseModel:
     """
-    This is the base model class.
+    The core model class that provides fundamental attributes and methods
+    for derived classes, including unique identifiers and timestamps.
     """
 
     def __init__(self, *args, **kwargs):
         """
-        Initialize public instance attributes.
+        Constructs a new BaseModel instance.
+
+        Initializes attributes from keyword arguments (kwargs) if provided,
+        otherwise sets default attributes.
         """
         if kwargs:
             for key, value in kwargs.items():
-                if key == 'created_at' or key == 'updated_at':
+                if key in ('created_at', 'updated_at'):
                     value = datetime.fromisoformat(value)
                 if key != '__class__':
                     setattr(self, key, value)
@@ -32,30 +36,39 @@ class BaseModel:
 
     def save(self):
         """
-        Updates the file storage with the new/updated information.
+        Saves the current state of the instance to storage.
+
+        Updates the `updated_at` timestamp and calls the save method of
+        the storage engine to persist changes.
         """
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
         """
-        Convert the object to a dictionary representation.
+        Converts the instance into a dictionary.
+
+        Includes all instance attributes and formats datetime fields to
+        ISO 8601 string format.
 
         Returns:
-            dict: A dictionary representation of the object.
+            dict: A dictionary representation of the instance.
         """
-
-        obj_dict = self.__dict__.copy()
-        obj_dict["__class__"] = self.__class__.__name__
-        for key, value in self.__dict__.items():
-            if key == 'created_at' or key == 'updated_at':
-                value = value.isoformat()
-            obj_dict[key] = value
-
-        return obj_dict
+        instance_dict = dict(self.__dict__)
+        instance_dict["__class__"] = self.__class__.__name__
+        for attr, value in self.__dict__.items():
+            if attr in ('created_at', 'updated_at'):
+                instance_dict[attr] = value.isoformat()
+            else:
+                instance_dict[attr] = value
+        return instance_dict
 
     def __str__(self):
         """
-        Returns a string representation of the BaseModel class.
+        Provides a string representation of the BaseModel instance.
+
+        Returns:
+            str: A formatted string showing the class name, ID, and attributes.
         """
-        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+        class_name = self.__class__.__name__
+        return f"[{class_name}] ({self.id}) {self.__dict__}"
