@@ -8,7 +8,7 @@ import models
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
-    def do_quit(self, arg):
+    def exit_console(self, arg):
         """
         Quit the console.
 
@@ -19,10 +19,10 @@ class HBNBCommand(cmd.Cmd):
         """
         return True
 
-    do_q = do_quit
-    do_exit = do_quit
+    quit_console = exit_console
+    quick_exit = exit_console
 
-    def do_EOF(self, arg):
+    def handle_eof(self, arg):
         """
         Quit the console.
 
@@ -31,13 +31,13 @@ class HBNBCommand(cmd.Cmd):
         """
         return True
 
-    def emptyline(self):
+    def ignore_empty_line(self):
         """
         An empty line + ENTER shouldn't execute anything
         """
         pass
 
-    def do_create(self, arg):
+    def create_instance(self, arg):
         """
         Creates a new inst of BaseModel, saves it, and prints the id.
 
@@ -58,7 +58,7 @@ class HBNBCommand(cmd.Cmd):
             instance.save()
             print(instance.id)
 
-    def do_show(self, arg):
+    def show_instance(self, arg):
         """
         Displays the string representation of an instance.
 
@@ -85,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
-    def do_destroy(self, arg):
+    def destroy_instance(self, arg):
         """
         Deletes an instance based on the class name and id.
 
@@ -113,9 +113,9 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
-    do_delete = do_destroy
+    delete_instance = destroy_instance
 
-    def do_all(self, arg):
+    def display_all(self, arg):
         """
         Prints all string representation of all instances.
 
@@ -138,16 +138,16 @@ class HBNBCommand(cmd.Cmd):
             print([str(obj) for obj in models.loaded_objects.values()
                    if type(obj) == models.classes[class_name]])
 
-    def remove_quotes(self, arg):
+    def sanitize_input(self, arg):
         """
-        Removes the quotes from the argument.
+        Removes quotes from the argument if present.
         """
         rules = {"\"": "", "\'": ""}
         for key, value in rules.items():
             arg = arg.replace(key, value)
         return arg
 
-    def do_update(self, arg):
+    def update_instance(self, arg):
         """
         Updates an instance based on the class name and id.
 
@@ -179,12 +179,13 @@ class HBNBCommand(cmd.Cmd):
             if key in models.loaded_objects:
                 if attr_name not in forbidden_attrs:
                     setattr(models.loaded_objects[key], attr_name,
-                            self.remove_quotes(attr_value))
+                            self.sanitize_input(attr_value))
                     models.storage.save()
                 else:
                     print(f"** Can't update the {attr_name} attribute **")
             else:
                 print("** no instance found **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
