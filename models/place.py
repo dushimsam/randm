@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-This module contains the Place class (Blueprint for creating Place objects).
+This module defines the `Place` class, which serves as a blueprint for creating 
+place/house objects within the application.
 """
 
 from models.base_model import BaseModel
@@ -8,21 +9,13 @@ from models.base_model import BaseModel
 
 class Place(BaseModel):
     """
-    This is the place class
+    Represents a place or house within the application.
 
-    Attributes:
-        city_id (str): The city id
-        user_id (str): The user id
-        name (str): The name of the place/house
-        description (str): The description of the place/house
-        number_rooms (int): The number of rooms in the place/house
-        number_bathrooms (int): The number of bathrooms in the place/house
-        max_guest (int): The max number of guests the place/house can hold
-        price_by_night (int): The price per night for the place/house
-        latitude (float): The latitude of the place/house
-        longitude (float): The longitude of the place/house
-        amenity_ids (list): A list of amenity(ids) in the place/house
+    The `Place` class extends `BaseModel` and adds attributes specific to 
+    a place or house. This class is used to model various properties of 
+    accommodation in the system.
     """
+
     city_id = ""
     user_id = ""
     name = ""
@@ -36,15 +29,15 @@ class Place(BaseModel):
     amenity_ids = []
 
     def __init__(self, *args, **kwargs):
+        """
+        Initializes a new `Place` instance.
+
+        This method sets up the place/house attributes either from provided
+        keyword arguments (kwargs) or by using default values. Inherited
+        attributes are initialized by the parent class `BaseModel`.
+
+        Args:
+            *args: Variable length argument list (not used in this implementation).
+            **kwargs: Dictionary of keyword arguments to initialize the place attributes.
+        """
         super().__init__(*args, **kwargs)
-        # self.city_id = Place.city_id
-        # self.user_id = Place.user_id
-        # self.name = Place.name
-        # self.description = Place.description
-        # self.number_rooms = Place.number_rooms
-        # self.number_bathrooms = Place.number_bathrooms
-        # self.max_guest = Place.max_guest
-        # self.price_by_night = Place.price_by_night
-        # self.latitude = Place.latitude
-        # self.longitude = Place.longitude
-        # self.amenity_ids = Place.amenity_ids
