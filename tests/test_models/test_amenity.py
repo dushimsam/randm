@@ -10,7 +10,7 @@ from time import sleep
 from models.amenity import Amenity
 
 
-class TestAmenity_instantiation(unittest.TestCase):
+class TestAmenityInstantiation(unittest.TestCase):
     """Unittests for testing instantiation of the Amenity class."""
 
     def test_no_args_instantiates(self):
@@ -55,11 +55,11 @@ class TestAmenity_instantiation(unittest.TestCase):
         dt = datetime.today()
         dt_repr = repr(dt)
         am = Amenity()
-        am.id = "123456"
+        am.id = "345"
         am.created_at = am.updated_at = dt
         amstr = am.__str__()
-        self.assertIn("[Amenity] (123456)", amstr)
-        self.assertIn("'id': '123456'", amstr)
+        self.assertIn("[Amenity] (345)", amstr)
+        self.assertIn("'id': '345'", amstr)
         self.assertIn("'created_at': " + dt_repr, amstr)
         self.assertIn("'updated_at': " + dt_repr, amstr)
 
@@ -81,11 +81,11 @@ class TestAmenity_instantiation(unittest.TestCase):
             Amenity(id=None, created_at=None, updated_at=None)
 
 
-class TestAmenity_save(unittest.TestCase):
+class TestAmenitySave(unittest.TestCase):
     """Unittests for testing save method of the Amenity class."""
 
     @classmethod
-    def setUp(self):
+    def setUp(cls):
         try:
             os.rename("file.json", "tmp")
         except IOError:
@@ -132,7 +132,7 @@ class TestAmenity_save(unittest.TestCase):
             self.assertIn(amid, f.read())
 
 
-class TestAmenity_to_dict(unittest.TestCase):
+class TestAmenityToDict(unittest.TestCase):
     """Unittests for testing to_dict method of the Amenity class."""
 
     def test_to_dict_type(self):
@@ -162,10 +162,10 @@ class TestAmenity_to_dict(unittest.TestCase):
     def test_to_dict_output(self):
         dt = datetime.today()
         am = Amenity()
-        am.id = "123456"
+        am.id = "345"
         am.created_at = am.updated_at = dt
         tdict = {
-            'id': '123456',
+            'id': '345',
             '__class__': 'Amenity',
             'created_at': dt.isoformat(),
             'updated_at': dt.isoformat(),
